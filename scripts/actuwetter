@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl ftp://login:secret@ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/$(curl ftp://login:sectret@ftp-outgoing2.dwd.de/gds/specials/observations/tables/germany/ -s -l  |sort | tail -n1 ) -s | iconv -f ISO_8859-1 
+
+

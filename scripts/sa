@@ -1,0 +1,6 @@
+#!/usr/bin/zsh
+
+sudo aptitude $@
+rehash #zsh automation
+
+

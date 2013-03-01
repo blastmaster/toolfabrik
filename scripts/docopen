@@ -1,0 +1,80 @@
+#!/bin/bash
+
+HTMLDOCIDX="/home/john/usr/var/docopen/htmldocidx"
+DMENU=dmenu
+SPECS=/home/john/infosys/specdocs
+
+function amddoc() {
+	ENTRY=$(ls $SPECS/amd | $DMENU -l 14)
+	if [ $ENTRY ]
+	then
+		okular $SPECS/amd/$ENTRY
+	fi
+
+}
+
+function atmeldoc() {
+	ENTRY=$(ls $SPECS/avr | $DMENU -l 14)
+	if [ $ENTRY ]
+	then
+		okular $SPECS/avr/$ENTRY
+	fi
+}
+
+function armdoc() {
+	ENTRY=$(ls $SPECS/arm | $DMENU -l 14)
+	if [ $ENTRY ]
+	then
+	okular $SPECS/arm/$ENTRY
+	fi
+}
+
+
+function aproz() {
+	cd $SPECS
+	ENTRY=$(find a* -mindepth 1 -type f | $DMENU -l 14)
+	if [ $ENTRY ]
+	then
+		okular $ENTRY
+	fi
+}
+
+
+
+function usage() {
+	echo " usage: $0 <category>
+	perhaps you haven't gicen a valid category"
+}
+
+
+function htmldoc() {
+	ENTRY=$( $DMENU -l 20 < $HTMLDOCIDX)
+	if [ $ENTRY ]
+	then
+		firefox  "file://$ENTRY"
+	fi
+}
+
+function htmldocupdate() {
+	echo "Aktualisiere index in $HTMLDOCIDX :"
+	find /home/john/usr/share/doc -maxdepth 3 -name index.html -print > $HTMLDOCIDX
+	find  /usr/share/doc  -maxdepth 3 -name index.html -print >> $HTMLDOCIDX
+	echo 'DONE!'
+}
+
+
+echo $1
+case "$1" in
+	"amd") 		amddoc
+		;;
+	"avr")		atmeldoc
+		;;
+	"html")		htmldoc
+		;;
+	"update")	htmldocupdate
+		;;
+	*) 		aproz
+		;;
+esac
+
+
